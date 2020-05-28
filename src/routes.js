@@ -12,7 +12,7 @@ const ProjectTeamAssignmentController = require('./controllers/ProjectTeamAssign
 const OfferController = require('./controllers/OfferController');
 const ProjectOfferController = require('./controllers/ProjectOfferController');
 const OngoingProjectController = require('./controllers/OngoingProjectController');
-const ProjectMessageController = require('./controllers/ProjectMessagecontroller');
+const ProjectMessageController = require('./controllers/ProjectMessageController');
 const ProjectStateController = require('./controllers/ProjectStateController');
 const TeamJoiningSolicitationController = require('./controllers/TeamJoiningSolicitationController');
 const TeamJoiningController = require('./controllers/TeamJoiningController');
@@ -20,12 +20,11 @@ const TeamMessageController = require('./controllers/TeamMessageController');
 const TeamOwnerVerificationController = require('./controllers/TeamOwnerVerificationController');
 
 const routes = express.Router();
-const upload = multer(uploadConfig);
 
 routes.post('/bug_reports', BugReportController.store);
 routes.post('/sessions', SessionController.create);
 routes.get('/users', UserController.show);
-routes.post('/users', upload.single('photo'), UserController.store);
+routes.post('/users', UserController.store);
 routes.get('/teams', TeamController.index);
 routes.get('/teams/:team_id', TeamController.show);
 routes.post('/teams', TeamController.store);
