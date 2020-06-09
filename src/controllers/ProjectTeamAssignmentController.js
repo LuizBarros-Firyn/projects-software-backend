@@ -32,7 +32,8 @@ module.exports = {
                 expected_finish_date: finish_date, 
                 $unset: { offers_quantity: "" } 
             },
-            { new: true });
+            { new: true }
+        );
 
         await Offer.deleteMany({ project: project_id });
 

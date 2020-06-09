@@ -18,12 +18,15 @@ const TeamJoiningSolicitationController = require('./controllers/TeamJoiningSoli
 const TeamJoiningController = require('./controllers/TeamJoiningController');
 const TeamMessageController = require('./controllers/TeamMessageController');
 const TeamOwnerVerificationController = require('./controllers/TeamOwnerVerificationController');
+const ProfileCommentController = require('./controllers/ProfileCommentController');
 
 const routes = express.Router();
+const upload = multer(uploadConfig);
 
 routes.post('/bug_reports', BugReportController.store);
 routes.post('/sessions', SessionController.create);
-routes.get('/users', UserController.show);
+routes.get('/users/:user_id', UserController.show);
+routes.put('/users/:user_id', upload.single('photo'), UserController.update);
 routes.post('/users', UserController.store);
 routes.get('/teams', TeamController.index);
 routes.get('/teams/:team_id', TeamController.show);
@@ -52,5 +55,8 @@ routes.get('/project_messages/:project_id', ProjectMessageController.index);
 routes.post('/project_messages/', ProjectMessageController.store);
 routes.put('/project_approval_state/:project_id', ProjectStateController.update);
 routes.delete('/project_approval_state/:project_id', ProjectStateController.delete);
+routes.get('/profile_comments', ProfileCommentController.index);
+routes.post('/profile_comments', ProfileCommentController.store);
+routes.get('/', (request, response) => { return response.status(200).send() });
 
 module.exports = routes;

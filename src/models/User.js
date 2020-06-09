@@ -2,22 +2,31 @@ const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
     name: String,
-    login: String,
+    email: String,
     password: String,
     age: Number,
-    phone: String,
-    email: String,
     photo: String,
-    person_identifier: String, // cpf/cnpj
     company_name: String,
     city: String,
     uf: String,
     is_freelancer: Boolean, // user type
+    description: String, //user's bio
     techs: [String],
     team: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Team' 
     },
+}, {
+    toObject: {
+        virtuals: true
+    },
+    toJSON: {
+        virtuals: true,
+    },
+});
+
+UserSchema.virtual('photo_url').get(function() {
+    return `${process.env.FILES_URL}${this.photo}`
 });
 
 module.exports = mongoose.model('User', UserSchema);

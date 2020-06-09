@@ -1,6 +1,5 @@
 const TeamJoiningSolicitation = require('../models/TeamJoiningSolicitation');
 const Team = require('../models/Team');
-const User = require('../models/User');
 
 module.exports = {
     async index(request, response) {

@@ -1,15 +1,17 @@
 const mongoose = require('mongoose');
 const User = require('../models/User');
-const Team = require('../models/Team');
+const { SHA3 } = require('sha3');
+
+const hash = new SHA3(512);
 
 module.exports = {
     async create(request, response) {
-        const { login, password } = request.body;
+        const { email, password } = request.body;
 
-        const user = await User.findOne({ login });
+        const user = await User.findOne({ email });
 
-        if (!user || user.password != password){
-            return response.json({ fail_message: 'Login ou Senha inválida' });
+        if (!user || user.password != hash.update(password).digest('hex')){
+            return response.json({ fail_message: 'Email ou Senha inválida' });
         }
 
         let userSession;
