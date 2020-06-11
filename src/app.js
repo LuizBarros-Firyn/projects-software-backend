@@ -15,9 +15,7 @@ mongoose.connect(process.env.MONGO_URL,{
     useFindAndModify: false
 });
 
-app.use(cors({
-    origin: process.env.ORIGIN_URL
-}));
+app.use(cors());
 
 app.use(express.json());
 
