@@ -17,17 +17,6 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Team' 
     },
-}, {
-    toObject: {
-        virtuals: true
-    },
-    toJSON: {
-        virtuals: true,
-    },
-});
-
-UserSchema.virtual('photo_url').get(function() {
-    return `${process.env.FILES_URL}${this.photo}`
 });
 
 module.exports = mongoose.model('User', UserSchema);
