@@ -1,4 +1,5 @@
 const Project = require('../models/Project');
+const User = require('../models/User');
 
 module.exports = {
     async show(request, response) {
@@ -29,7 +30,13 @@ module.exports = {
     async update(request, response) {
         const { project_id } = request.params;
 
-        await Project.updateOne( { _id: project_id }, { $unset: { is_sent_for_approval: "" }, $set: { is_finished: true } } );
+        const project = await Project.findOneAndUpdate( { _id: project_id }, { $unset: { is_sent_for_approval: "" }, $set: { is_finished: true } } );
+
+        const assignedTeamMembers = await User.find({ team: project.team_id });
+        
+        assignedTeamMembers.map(async teamMember => {
+            await User.updateOne( { _id: teamMember._id }, { $inc: { "projects_finished": 1 }} );
+        });
 
         return response.status(204).send();
     }

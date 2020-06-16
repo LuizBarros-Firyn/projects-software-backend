@@ -10,7 +10,7 @@ module.exports = {
         if (!team)
             return response.status(400).send();
 
-        const teamSolicitations = await TeamJoiningSolicitation.find({ team: team_id, team_owner: user_id }).populate({ path: 'user', select: 'techs name age' });
+        const teamSolicitations = await TeamJoiningSolicitation.find({ team: team_id, team_owner: user_id }).populate({ path: 'user', select: 'techs name age photo' });
 
         return response.json(teamSolicitations);
     },

@@ -11,6 +11,7 @@ const UserSchema = new mongoose.Schema({
     uf: String,
     is_freelancer: Boolean, // user type
     description: String, //user's bio
+    projects_finished: Number,
     techs: [String],
     team: {
         type: mongoose.Schema.Types.ObjectId,
