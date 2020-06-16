@@ -33,6 +33,7 @@ module.exports = {
             city,
             uf,
             is_freelancer,
+            finished_projects: is_freelancer && 0,
             techs: techs? techs.split(',').map(tech => tech.trim()) : null
         });
 
@@ -52,8 +53,7 @@ module.exports = {
         if (oldPhoto.photo)
             fs.unlinkSync(path.resolve(__dirname, '..', '..', 'uploads', `${oldPhoto.photo}`));
 
-
-        if (user_is_freelancer == true) { // if not explicit, 'if' command will check if the variable exists, not it's value
+        if (user_is_freelancer == "true") { // FormData used to send images transforms booleans into strings
             user = await User.findOneAndUpdate({ _id: user_id }, { 
                 name,
                 description, 

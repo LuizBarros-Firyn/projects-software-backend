@@ -19,6 +19,8 @@ const TeamJoiningController = require('./controllers/TeamJoiningController');
 const TeamMessageController = require('./controllers/TeamMessageController');
 const TeamOwnerVerificationController = require('./controllers/TeamOwnerVerificationController');
 const ProfileCommentController = require('./controllers/ProfileCommentController');
+const TeamProfileCommentController = require('./controllers/TeamProfileCommentController');
+const TeamMemberController = require('./controllers/TeamMemberController');
 
 const routes = express.Router();
 const upload = multer(uploadConfig);
@@ -26,7 +28,7 @@ const upload = multer(uploadConfig);
 routes.post('/bug_reports', BugReportController.store);
 routes.post('/sessions', SessionController.create);
 routes.get('/users/:user_id', UserController.show);
-routes.put('/users/:user_id', upload.single('photo'), UserController.update);
+routes.put('/users', upload.single('photo'), UserController.update);
 routes.post('/users', UserController.store);
 routes.get('/teams', TeamController.index);
 routes.get('/teams/:team_id', TeamController.show);
@@ -57,6 +59,9 @@ routes.put('/project_approval_state/:project_id', ProjectStateController.update)
 routes.delete('/project_approval_state/:project_id', ProjectStateController.delete);
 routes.get('/profile_comments', ProfileCommentController.index);
 routes.post('/profile_comments', ProfileCommentController.store);
+routes.get('/team_profile_comments', TeamProfileCommentController.index);
+routes.post('/team_profile_comments', TeamProfileCommentController.store);
+routes.get('/team_members', TeamMemberController.index);
 routes.get('/', (request, response) => { return response.status(200).send() });
 
 module.exports = routes;
