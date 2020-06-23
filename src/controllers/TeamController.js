@@ -16,7 +16,7 @@ module.exports = {
     async index(request, response) {
         const teams = await Team.find({ is_hiring: true });
 
-        return response.json(teams);
+        return response.json({teams});
     },
 
     async store(request, response) {

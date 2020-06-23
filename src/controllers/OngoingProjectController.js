@@ -32,12 +32,22 @@ module.exports = {
 
         const project = await Project.findOneAndUpdate( { _id: project_id }, { $unset: { is_sent_for_approval: "" }, $set: { is_finished: true } } );
 
-        const assignedTeamMembers = await User.find({ team: project.team_id });
-        
-        assignedTeamMembers.map(async teamMember => {
-            await User.updateOne( { _id: teamMember._id }, { $inc: { "projects_finished": 1 }} );
-        });
+        const assignedTeamMembers = await User.find({ team: project.team });
 
+        const teamLength = assignedTeamMembers.length;
+        
+        if (new Date() < project.expected_finish_date) {
+            assignedTeamMembers.map(async teamMember => {
+                await User.updateOne( { _id: teamMember._id }, { $inc: { 
+                    "projects_finished": 1, "wallet_balance": (project.price * 0.8) / teamLength, "three_successful_projects_streak": 1, "five_successful_projects_streak": 1 }
+                });
+            });
+        } else {
+            assignedTeamMembers.map(async teamMember => {
+                await User.updateOne( { _id: teamMember._id }, { $set: { three_successful_projects_streak: 0, five_successful_projects_streak: 0 } });
+            });
+        }
+            
         return response.status(204).send();
     }
 };

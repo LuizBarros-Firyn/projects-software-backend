@@ -11,9 +11,11 @@ const UserSchema = new mongoose.Schema({
     uf: String,
     is_freelancer: Boolean, // user type
     description: String, //user's bio
-    projects_finished: Number,
     seniority_level: Number,
     wallet_balance: Number,
+    projects_finished: Number,
+    three_successful_projects_streak: Number,
+    five_successful_projects_streak: Number,
     techs: [String],
     team: {
         type: mongoose.Schema.Types.ObjectId,

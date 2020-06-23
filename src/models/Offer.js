@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const OfferSchema = new mongoose.Schema({
     price: Number,
     description: String,
-    start_date: String,
-    finish_date: String,
+    start_date: Date,
+    finish_date: Date,
     project: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Project'

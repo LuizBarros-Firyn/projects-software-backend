@@ -16,6 +16,8 @@ module.exports = {
 
         const project = await Project.findOneAndUpdate({ _id: project_id }, { $inc: { "offers_quantity": 1 }});
 
+        console.log('aa')
+
         const offer = await Offer.create({
             project: project_id,
             team: team_id,

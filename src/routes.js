@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const uploadConfig = require('./config/upload');
+const authMiddleware = require('./controllers/authController');
 
 const BugReportController = require('./controllers/BugReportController');
 const UserController = require('./controllers/UserController');
@@ -21,15 +22,24 @@ const TeamOwnerVerificationController = require('./controllers/TeamOwnerVerifica
 const ProfileCommentController = require('./controllers/ProfileCommentController');
 const TeamProfileCommentController = require('./controllers/TeamProfileCommentController');
 const TeamMemberController = require('./controllers/TeamMemberController');
+const UserGamificationStatusController = require('./controllers/UserGamificationStatusController');
+const BonificationRedeemingController = require('./controllers/BonificationRedeemingController');
 
 const routes = express.Router();
 const upload = multer(uploadConfig);
 
+// Public routes
+
 routes.post('/bug_reports', BugReportController.store);
 routes.post('/sessions', SessionController.create);
+routes.post('/users', UserController.store);
+
+// Private routes
+
+routes.use(authMiddleware);
+
 routes.get('/users/:user_id', UserController.show);
 routes.put('/users', upload.single('photo'), UserController.update);
-routes.post('/users', UserController.store);
 routes.get('/teams', TeamController.index);
 routes.get('/teams/:team_id', TeamController.show);
 routes.post('/teams', TeamController.store);
@@ -62,6 +72,8 @@ routes.post('/profile_comments', ProfileCommentController.store);
 routes.get('/team_profile_comments', TeamProfileCommentController.index);
 routes.post('/team_profile_comments', TeamProfileCommentController.store);
 routes.get('/team_members', TeamMemberController.index);
+routes.get('/user_gamification_status', UserGamificationStatusController.show);
+routes.put('/redeem_bonification', BonificationRedeemingController.update);
 routes.get('/', (request, response) => { return response.status(200).send() });
 
 module.exports = routes;
