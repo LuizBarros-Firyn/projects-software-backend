@@ -28,7 +28,7 @@ module.exports = {
         if (!user.is_freelancer) {
             userSession = { user_id: user._id, user_name: user.name, user_is_freelancer: user.is_freelancer }
             
-            return response.json({ userSession })
+            return response.json({ userSession, authorization })
         }
 
         if (user.team) {
