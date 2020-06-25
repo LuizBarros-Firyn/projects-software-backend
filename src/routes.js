@@ -33,6 +33,7 @@ const upload = multer(uploadConfig);
 routes.post('/bug_reports', BugReportController.store);
 routes.post('/sessions', SessionController.create);
 routes.post('/users', UserController.store);
+routes.get('/', (request, response) => { return response.status(200).send() });
 
 // Private routes
 
@@ -74,6 +75,5 @@ routes.post('/team_profile_comments', TeamProfileCommentController.store);
 routes.get('/team_members', TeamMemberController.index);
 routes.get('/user_gamification_status', UserGamificationStatusController.show);
 routes.put('/redeem_bonification', BonificationRedeemingController.update);
-routes.get('/', (request, response) => { return response.status(200).send() });
 
 module.exports = routes;
