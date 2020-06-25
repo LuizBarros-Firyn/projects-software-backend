@@ -3,7 +3,7 @@ const Offer = require('../models/Offer');
 
 module.exports = {
     async index(request, response) {
-        const projects = await Project.find({ team: { $exists: false } });
+        const projects = await Project.find({ team: { $exists: false } }).populate('user', 'name');
 
         return response.json(projects);
     },
