@@ -24,16 +24,19 @@ const TeamProfileCommentController = require('./controllers/TeamProfileCommentCo
 const TeamMemberController = require('./controllers/TeamMemberController');
 const UserGamificationStatusController = require('./controllers/UserGamificationStatusController');
 const BonificationRedeemingController = require('./controllers/BonificationRedeemingController');
+const PasswordRecoveryController = require('./controllers/PasswordRecoveryController')
 
 const routes = express.Router();
 const upload = multer(uploadConfig);
 
 // Public routes
 
+routes.get('/', (request, response) => { return response.status(200).send() });
 routes.post('/bug_reports', BugReportController.store);
 routes.post('/sessions', SessionController.create);
 routes.post('/users', UserController.store);
-routes.get('/', (request, response) => { return response.status(200).send() });
+routes.post('/password_recovery', PasswordRecoveryController.create);
+routes.put('/reset_password', PasswordRecoveryController.update);
 
 // Private routes
 

@@ -16,6 +16,14 @@ const UserSchema = new mongoose.Schema({
     projects_finished: Number,
     three_successful_projects_streak: Number,
     five_successful_projects_streak: Number,
+    passwordResetToken: {
+        type: String,
+        select: false
+    },
+    passwordResetExpires: {
+        type: Date,
+        select: false
+    },
     techs: [String],
     team: {
         type: mongoose.Schema.Types.ObjectId,
